@@ -24,9 +24,11 @@
 	<label>期限：</label>
 	<input type="datetime-local" name="deadline" th:value="*{deadline}" /><br>
 	<div th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></div>
+	<!-- taskIdが設定されていればhiddenでサーバに送る -->
 	<input  th:if="${taskId}" type="hidden" name="taskId" th:value="${taskId}">
 	<input type="submit" value="送信">
 </form>
+<!-- 新規登録の場合だけ -->
 <div th:if="${taskForm.isNewTask}" style="margin:10px">
 <h3>タスク　編集削除</h3>
 <table>
@@ -35,6 +37,8 @@
 		<td th:text=${obj.title}></td>
 		<td th:text=${obj.deadline}></td>
 		<td th:text=${obj.taskType.type}></td>
+		<!-- リンク先の{id}は後から値を置き換えることができる -->
+		<!-- 置き換える値は「(id=置き換える値)」で指定できる -->
 		<td><a type="button" th:href="@{/task/{id}(id=${obj.id})}">編集</a></td>
 		<td>
 			<form method="POST" th:action="@{/task/delete}">

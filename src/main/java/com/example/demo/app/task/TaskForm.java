@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class TaskForm {
 
+	// integer は整数桁数、fraction は少数桁数
     @Digits(integer = 1, fraction = 0)
     private int typeId;
 

@@ -11,6 +11,8 @@ public interface TaskDao{
 	
 	List<Task> findAll();
 	
+	//Optional:値をラップし、その値がnullかもしれないことを表現するクラス。
+	//メソッドの戻り値として使用する。
 	Optional<Task> findById(int id);
 
 	void insert(Task task);
