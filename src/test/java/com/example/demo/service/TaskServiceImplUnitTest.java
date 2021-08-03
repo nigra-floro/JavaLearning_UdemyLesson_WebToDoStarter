@@ -21,6 +21,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import com.example.demo.entity.Task;
 import com.example.demo.repository.TaskDao;
 
+//「@ExtendWith(MockitoExtention.class)」でJUnit5にMockitoという拡張機能を統合する
 @ExtendWith(MockitoExtension.class)
 //@DisplayNameの内容はテスト実行時JUnitタブに表示される
 @DisplayName("TaskServiceImplの単体テスト")
@@ -41,6 +42,7 @@ class TaskServiceImplUnitTest {
 		List<Task> list = new ArrayList<>();
 
 		// モッククラスのI/Oをセット（findAll()の型と異なる戻り値はNG）
+		// when(モックのメソッド).thenReturn(想定される戻り値)
 		when(dao.findAll()).thenReturn(list);
 
 		// サービスを実行
@@ -50,6 +52,7 @@ class TaskServiceImplUnitTest {
 		verify(dao, times(1)).findAll();
 
 		// 戻り値の検査(expected, actual)
+		// 0であることを確認
 		assertEquals(0, actualList.size());
 
 	}
@@ -92,6 +95,7 @@ class TaskServiceImplUnitTest {
 		try {
 			Optional<Task> task0 = taskServiceImpl.getTask(0);
 		} catch (TaskNotFoundException e) {
+			// メッセージの確認
 			assertEquals(e.getMessage(), "指定されたタスクが存在しません");
 		}
 	}
