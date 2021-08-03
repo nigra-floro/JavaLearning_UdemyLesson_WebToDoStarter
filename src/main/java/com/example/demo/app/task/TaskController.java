@@ -30,6 +30,11 @@ public class TaskController {
     private final TaskService taskService;
 
     @Autowired
+    //インスタンス変数（注入先の変数）の前に@Autowiredをつけると、
+    //@Componentアノテーションのついたクラスの中から該当するものを探し、
+    //インスタンスをnewして注入してくれる
+    //※@Componentアノテーションは、そのまま使うことはほとんどなく、
+    //  レイヤに応じて@Controller or @Service or @Repositoryを使う
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
@@ -66,6 +71,7 @@ public class TaskController {
      */
     @PostMapping("/insert")
     public String insert(
+    	//@Validと@Validatedは同じ意味。どちらでもよい
     	@Valid @ModelAttribute TaskForm taskForm,
         BindingResult result,
         Model model) {
@@ -104,6 +110,8 @@ public class TaskController {
     @GetMapping("/{id}")
     public String showUpdate(
     	TaskForm taskForm,
+    	//@PathVariableで{id}のようにスラッシュ以降に入力された文字列を取得
+    	//cf)URLパラメータは@RequestParamで取得できる
         @PathVariable int id,
         Model model) {
 
@@ -113,6 +121,7 @@ public class TaskController {
         //TaskFormへの詰め直し
         //Optionalの中にラップされていたtaskを取り出しtに格納する。
         //変数tをmakeTaskFormで使用し、その戻り値は変数TaskFormOptに格納される。
+        //OptionalのmapメソッドはOptionalの中身を引数に受け取って処理を行う
         Optional<TaskForm> taskFormOpt = taskOpt.map(t -> makeTaskForm(t));
         
         //TaskFormがnullでなければ中身を取り出し
@@ -142,6 +151,7 @@ public class TaskController {
     public String update(
     	@Valid @ModelAttribute TaskForm taskForm,
     	BindingResult result,
+    	//Hiddenで受け取る値は@RequestParamを使う
     	@RequestParam("taskId") int taskId,
     	Model model,
     	RedirectAttributes redirectAttributes) {
@@ -153,13 +163,13 @@ public class TaskController {
         	//更新処理、フラッシュスコープの使用、リダイレクト（個々の編集ページ）
         	taskService.update(task);
         	redirectAttributes.addFlashAttribute("complete", "変更が完了しました");
+        	//更新画面に戻りたいのでidもリダイレクトパスに追加
             return "redirect:/task/" + taskId;
         } else {
             model.addAttribute("taskForm", taskForm);
             model.addAttribute("title", "タスク一覧");
             return "task/index";
         }
-        
         
     }
 
@@ -172,10 +182,12 @@ public class TaskController {
     @PostMapping("/delete")
     public String delete(
     	@RequestParam("taskId") int id,
-    	Model model) {
+    	Model model,
+    	RedirectAttributes redirectAttributes) {
     	
     	//タスクを一件削除しリダイレクト
     	taskService.deleteById(id);
+    	redirectAttributes.addFlashAttribute("complete", "削除が完了しました");
         return "redirect:/task";
     }
 

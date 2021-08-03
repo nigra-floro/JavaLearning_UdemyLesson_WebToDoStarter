@@ -23,6 +23,7 @@ public class TaskForm {
     private String detail;
 
     @NotNull (message = "期限を設定してください。")
+    //↓フォーマットを指定。HTMLで「input type="datetime-local"」にしただけでは日時で受け取れない
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Future (message = "期限が過去に設定されています。")
     private LocalDateTime deadline;
