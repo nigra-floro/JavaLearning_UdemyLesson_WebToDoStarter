@@ -1,8 +1,7 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:test
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  h2.console.enabled: true
+    url: jdbc:postgresql://localhost/webtodostarter
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
 

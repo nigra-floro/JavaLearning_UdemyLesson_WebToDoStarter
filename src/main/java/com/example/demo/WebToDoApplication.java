@@ -9,5 +9,4 @@ public class WebToDoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WebToDoApplication.class, args);
 	}
-
 }

@@ -48,17 +48,7 @@ class TaskServiceImplTest {
     }
     
     
-    @Test
-    @DisplayName("1件のタスクが取得できた場合のテスト")
-    void testGetTaskFormReturnOne() {
-    	//idが1のTaskを取得
-    	Optional<Task> taskOpt = taskService.getTask(1);
-        
-        //取得できたことを確認
-    	assertEquals("JUnitを学習", taskOpt.get().getTitle());
-    	
-    }
-    
+
 
 
 }
