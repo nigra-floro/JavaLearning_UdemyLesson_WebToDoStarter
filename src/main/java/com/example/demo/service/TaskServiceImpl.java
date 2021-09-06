@@ -37,9 +37,9 @@ public class TaskServiceImpl implements TaskService {
 		try {
 			return dao.findById(id);
 		} catch (EmptyResultDataAccessException e) {
-			//Springで用意されているEmptyResultDataAccessException（非チェック例外）が発生したら
-			//自作のTaskNotFoundExceptionに置き換えて再スローする
-			//※通常DBそうさにおける例外はチェック例外だが、Springではこれを非チェック例外に置き換えている
+			// Springで用意されているEmptyResultDataAccessException（非チェック例外）が発生したら
+			// 自作のTaskNotFoundExceptionに置き換えて再スローする
+			// ※通常DB操作における例外はチェック例外だが、Springではこれを非チェック例外に置き換えている
 			throw new TaskNotFoundException("指定されたタスクが存在しません");
 		}
 	}

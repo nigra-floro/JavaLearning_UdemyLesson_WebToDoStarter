@@ -14,11 +14,17 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.demo.entity.Task;
 
-@SpringJUnitConfig //Junit5上でSpring TestContext Frameworkを利用することを示す
-//「@SpringJUnitConfig」は「@ExtendWith(SpringExtension.class)」と
-//「@ContextConfiguration」をまとめたもの
-@SpringBootTest //毎回サーバ起動
-@ActiveProfiles("unit")//application-unit.ymlのunitを対応（DBの設定を読み込む）
+// Junit5上でSpring TestContext Frameworkを利用することを示す
+// 「@SpringJUnitConfig」は 
+// 　・JUnit の「@ExtendWith(SpringExtension.class)」
+// 　・Spring TestContext フレームワークの「@ContextConfiguration」（※）
+// を組み合わせた合成アノテーション
+// ※「@ContextConfiguration」
+@SpringJUnitConfig
+@SpringBootTest // 毎回サーバ起動
+// @ActiveProfiles("xxx")でapplication-xxx.yml を読み込む（DBの設定を読み込む）
+//@ActiveProfiles("unit")
+@ActiveProfiles("it")
 @DisplayName("TaskServiceImplの結合テスト")
 class TaskServiceImplTest {
 	
@@ -39,14 +45,24 @@ class TaskServiceImplTest {
     @Test//order byがある場合は順序の確認をすることがある
     @DisplayName("全件検索のテスト")
     void testFindAllCheckCount() {
-    	//全件取得
+    	// 全件取得
     	List<Task> list = taskService.findAll();
     	
-        //Taskテーブルに入っている2件が取得できているか確認
-    	assertEquals(2, list.size());
+        // Taskテーブルに入っている3件が取得できているか確認
+    	assertEquals(3, list.size());
     	
     }
     
+    @Test
+    @DisplayName("1件のタスクが取得できた場合のテスト")
+    void testGetTaskFormReturnOne() {
+    	// idが1のTaskを取得
+    	Optional<Task> taskOpt = taskService.getTask(1);
+    	
+        // 取得できたことを確認
+    	assertEquals("JUnitを学習", taskOpt.get().getTitle());
+    	
+    }
     
 
 
