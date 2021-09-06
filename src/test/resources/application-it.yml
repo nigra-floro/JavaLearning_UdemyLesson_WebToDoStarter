@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/webtodostarter
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+logging:
+  level:
+    root: WARN
