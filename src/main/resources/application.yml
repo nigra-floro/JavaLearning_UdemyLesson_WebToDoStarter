@@ -1,5 +1,6 @@
 spring:
   datasource:
+#   url: jdbc:postgresql://db-webtodostarter-postgres10.cdh9z7nnll7p.ap-northeast-1.rds.amazonaws.com/webtodostarter
     url: jdbc:postgresql://localhost/webtodostarter
     driverClassName: org.postgresql.Driver
     username: postgres
